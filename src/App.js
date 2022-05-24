@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { Login, Game, Raking, Feedback } from './Pages';
+import Login from './Pages/Login';
 import './App.css';
 
 class App extends React.Component {
