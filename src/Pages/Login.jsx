@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { fetchTokenThunk } from '../redux/actions';
 
 class Login extends Component {
   constructor() {
@@ -29,6 +32,10 @@ class Login extends Component {
       name,
       email,
     } = this.state;
+
+    const {
+      getPlayerToken,
+    } = this.props;
     return (
       <form>
         <label htmlFor="nameInput">
@@ -60,6 +67,7 @@ class Login extends Component {
             type="button"
             disabled={ !checkStatus }
             data-testid="btn-play"
+            onClick={ () => getPlayerToken() }
           >
             Play
           </button>
@@ -69,4 +77,12 @@ class Login extends Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  getPlayerToken: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  getPlayerToken: () => dispatch(fetchTokenThunk()),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
