@@ -8,5 +8,6 @@ const fetchToken = (data) => ({
 export const fetchTokenThunk = () => async (dispatch) => {
   const apiData = await fetch('https://opentdb.com/api_token.php?command=request');
   const result = await apiData.json();
+  localStorage.setItem('token', result.token);
   dispatch(fetchToken(result));
 };
