@@ -1,10 +1,13 @@
-import { React, Component } from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 class Login extends Component {
-  state = {
-    name: '',
-    email: '',
+  constructor() {
+    super();
+    this.state = {
+      name: '',
+      email: '',
+    };
   }
 
   onChange = ({ target }) => {
