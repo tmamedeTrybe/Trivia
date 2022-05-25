@@ -1,7 +1,7 @@
 import { FETCH_TOKEN } from '../actions';
 
 const INITIAL_STATE = {
-  player: '',
+  name: '',
   assertions: '',
   score: '',
   gravatarEmail: '',
