@@ -12,7 +12,8 @@ const player = (state = INITIAL_STATE, action) => {
   case FETCH_TOKEN:
     return {
       ...state,
-      token: action.payload.token,
+      name: action.payload.name,
+      gravatarEmail: action.payload.email,
     };
   default:
     return state;
