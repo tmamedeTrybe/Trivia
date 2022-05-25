@@ -1,4 +1,4 @@
-import { fireEvent, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux';
@@ -17,7 +17,7 @@ describe('Testa a tela de login', () => {
 
     const inputs = screen.getAllByRole('textbox');
     expect(inputs).toHaveLength(2);
-    
+
     const buttons = screen.getAllByRole('button');
     expect(buttons).toHaveLength(2);  
   })
@@ -32,10 +32,10 @@ describe('Testa a tela de login', () => {
 
     const nameInput = screen.getByRole('textbox', {name: /nome/i});
     expect(nameInput).toBeInTheDocument();
-    
+
     const emailInput = screen.getByRole('textbox', {name: /email/i});
     expect(emailInput).toBeInTheDocument();
-    
+
     userEvent.type(nameInput, 'daniel');
     expect(nameInput).toHaveValue('daniel');
 
@@ -54,14 +54,14 @@ describe('Testa a tela de login', () => {
 
     // const nameInput = screen.getByRole('textbox', {name: /nome/i});
     // expect(nameInput).toBeInTheDocument();
-    
+
     // const emailInput = screen.getByRole('textbox', {name: /email/i});
     // expect(emailInput).toBeInTheDocument();
-    
+
     // userEvent.type(nameInput, 'daniel');
     // expect(nameInput).toHaveValue('daniel');
 
-    
+
     // userEvent.type(emailInput, 'daniel@trybe.com');
     // expect(emailInput).toHaveValue('daniel@trybe.com');
 
@@ -72,11 +72,11 @@ describe('Testa a tela de login', () => {
 
     // // history.push({ location: '/game'});
     // // // // expect(localStorage).toHaveBeenCalled();
-    
+
     // // // // renderWithRouterAndRedux(<App/>, null, '/game');
-    
+
     // // // //https://stackoverflow.com/questions/21418580/what-is-the-difference-between-before-and-beforeeach
     // // expect(window.location.pathname).toBe('/game');
     // }) 
-  
-})
+
+}) 
