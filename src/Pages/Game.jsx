@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import propTypes from 'prop-types';
 import md5 from 'crypto-js/md5';
+import propTypes from 'prop-types';
 
 class Game extends React.Component {
   constructor() {
@@ -31,7 +31,7 @@ class Game extends React.Component {
 
   getUserPicture = (email) => {
     const hash = md5(email).toString();
-    return hash;
+    return `https://www.gravatar.com/avatar/${hash}`;
   }
 
   renderQuestion = () => {
@@ -65,9 +65,9 @@ class Game extends React.Component {
       <>
         <header>
           <img
-            src={ `https://www.gravatar.com/avatar/${this.getUserPicture(email)}` }
-            alt={ `gravatar img of ${name}` }
+            src={ this.getUserPicture(email) }
             data-testid="header-profile-picture"
+            alt={ `gravatar img of ${name}` }
           />
           <h2 data-testid="header-player-name">{ name }</h2>
           <h2 data-testid="header-score">{ score }</h2>
@@ -88,7 +88,7 @@ Game.propTypes = {
 
 const mapStateToProps = (state) => ({
   name: state.player.name,
-  email: state.player.email,
+  email: state.player.gravatarEmail,
   score: state.player.score,
 });
 
