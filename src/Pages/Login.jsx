@@ -67,7 +67,7 @@ class Login extends Component {
             type="button"
             disabled={ !checkStatus }
             data-testid="btn-play"
-            onClick={ () => getPlayerToken() }
+            onClick={ () => getPlayerToken(this.state) }
           >
             Play
           </button>
@@ -90,7 +90,7 @@ Login.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  getPlayerToken: () => dispatch(fetchTokenThunk()),
+  getPlayerToken: (state) => dispatch(fetchTokenThunk(state)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
