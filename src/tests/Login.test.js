@@ -14,5 +14,11 @@ describe('Testa a tela de login', () => {
     const buttons = screen.getAllByRole('button');
     expect(buttons).toHaveLength(2);  
   })
+  it('Botão "Play" está desabilitado ao iniciar a página', () => {
+    renderWithRouterAndRedux(<App/>)
+
+    const playButton = screen.getByRole('button', {name: /play/i});
+    expect(playButton).toHaveAttribute('disabled');
+  })
   
 })
