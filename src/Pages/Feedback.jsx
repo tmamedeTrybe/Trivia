@@ -11,6 +11,7 @@ class Feedback extends React.Component {
 
   render() {
     const { userName, userScore, userImage } = this.props;
+    const minScore = 3;
     return (
       <div>
         <header>
@@ -22,6 +23,20 @@ class Feedback extends React.Component {
           <p data-testid="header-player-name">{ userName }</p>
           <p data-testid="header-score">{ userScore }</p>
         </header>
+        <div>
+          {
+            userScore
+            < minScore
+              ? (
+                <p data-testid="feedback-text">
+                  Could be better...
+                </p>)
+              : (
+                <p data-testid="feedback-text">
+                  Well Done!
+                </p>)
+          }
+        </div>
       </div>);
   }
 }
