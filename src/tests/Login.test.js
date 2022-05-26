@@ -28,6 +28,14 @@ describe('Testa a tela de login', () => {
     expect(playButton).toHaveAttribute('disabled');
   })
   it('Jogador pode escrever nome e email e clicar em "Play"', () => {
+    const userToken = "44fe45813c8ea2f92f519bac70ae113f4db26c09788deca0879678cf90a1335f";
+    
+    global.fetch = jest.fn(() => {
+      return Promise.resolve({
+        json: () => Promise.resolve(userToken)
+      });
+    })
+    localStorage = jest.fn()
     renderWithRouterAndRedux(<App/>)
 
     const nameInput = screen.getByRole('textbox', {name: /nome/i});
