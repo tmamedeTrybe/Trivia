@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import md5 from 'crypto-js/md5';
+import { Link } from 'react-router-dom';
 
 class Feedback extends React.Component {
   createGravatarImage = (email) => {
@@ -43,6 +44,15 @@ class Feedback extends React.Component {
           Número de acertos
           <p data-testid="feedback-total-question">{ Number(userAssertions) }</p>
         </div>
+        <Link to="/">
+          <button
+            type="button"
+            data-testid="btn-play-again"
+            id="playAgain"
+          >
+            Play Again
+          </button>
+        </Link>
       </div>);
   }
 }
