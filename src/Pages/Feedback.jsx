@@ -10,7 +10,7 @@ class Feedback extends React.Component {
   }
 
   render() {
-    const { userName, userScore, userImage } = this.props;
+    const { userName, userScore, userImage, userAssertions } = this.props;
     const minScore = 3;
     return (
       <div>
@@ -37,6 +37,12 @@ class Feedback extends React.Component {
                 </p>)
           }
         </div>
+        <div>
+          Placar final:
+          <p data-testid="feedback-total-score">{Number(userScore)}</p>
+          Número de acertos
+          <p data-testid="feedback-total-question">{ Number(userAssertions) }</p>
+        </div>
       </div>);
   }
 }
@@ -45,12 +51,14 @@ const mapStateToProps = (state) => ({
   userName: state.player.name,
   userImage: state.player.gravatarEmail,
   userScore: state.player.score,
+  userAssertions: state.player.assertions,
 });
 
 Feedback.propTypes = {
   userName: propTypes.string.isRequired,
   userImage: propTypes.string.isRequired,
   userScore: propTypes.string.isRequired,
+  userAssertions: propTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps)(Feedback);
