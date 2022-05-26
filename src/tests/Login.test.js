@@ -4,6 +4,7 @@ import React from 'react';
 import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux';
 import App from '../App.js'
 
+
 // const INITIAL_STATE = {
 //   player: '',
 //   assertions: '',
@@ -35,7 +36,7 @@ describe('Testa a tela de login', () => {
         json: () => Promise.resolve(userToken)
       });
     })
-    localStorage = jest.fn()
+    // global.localStorage = jest.fn()
     renderWithRouterAndRedux(<App/>)
 
     const nameInput = screen.getByRole('textbox', {name: /nome/i});
