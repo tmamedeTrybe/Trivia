@@ -5,6 +5,9 @@ import propTypes from 'prop-types';
 import '../Css/Game.css';
 import { updateScore } from '../redux/actions/index';
 
+const correctAnswer = 'correct-phase-1';
+const wrongAnswer = 'wrong-phase-1';
+
 class Game extends React.Component {
   constructor() {
     super();
@@ -13,6 +16,7 @@ class Game extends React.Component {
       questionIndex: 0,
       alternatives: [],
       timer: 30,
+      nextBtnIsOn: false,
     };
   }
 
@@ -43,13 +47,27 @@ class Game extends React.Component {
   changeButtonColor = () => {
     const buttons = document.querySelectorAll('#answer-button');
     buttons.forEach((button) => {
-      if (button.className === 'correct-phase-1') {
+      if (button.className === correctAnswer) {
         button.className = 'correct-phase-2';
-      } else if (button.className === 'wrong-phase-1') {
+      } else if (button.className === wrongAnswer) {
         button.className = 'wrong-phase-2';
       }
       button.disabled = true;
     });
+    this.setState({ nextBtnIsOn: true });
+  }
+
+  rechangeButtonColor = () => {
+    const buttons = document.querySelectorAll('#answer-button');
+    buttons.forEach((button) => {
+      if (button.className === 'correct-phase-2') {
+        button.className = correctAnswer;
+      } else if (button.className === 'wrong-phase-2') {
+        button.className = wrongAnswer;
+      }
+      button.disabled = false;
+    });
+    this.setState({ nextBtnIsOn: false });
   }
 
   onClickCorrectAnswer = (difficulty) => {
@@ -63,14 +81,13 @@ class Game extends React.Component {
       updatePlayerScore(points + (timer * hard));
     } else if (difficulty === 'medium') {
       updatePlayerScore(points + (timer * medium));
-    } else {
+    } else if (difficulty === 'easy') {
       updatePlayerScore(points + (timer * easy));
     }
     this.changeButtonColor();
   }
 
   onClickIncorrectAnswer = () => {
-    console.log('incorreta');
     this.changeButtonColor();
   }
 
@@ -97,8 +114,23 @@ class Game extends React.Component {
     this.setState({ alternatives });
   }
 
+  onClickNextButton = () => {
+    const { questionIndex } = this.state;
+    const { history } = this.props;
+    const length = 4;
+    return questionIndex < length
+      ? (
+        this.setState((prevState) => ({ questionIndex: prevState.questionIndex + 1 }),
+          () => {
+            this.renderQuestion();
+            this.rechangeButtonColor();
+          })
+      )
+      : history.push('/feedback');
+  }
+
   render() {
-    const { questions, alternatives, questionIndex } = this.state;
+    const { questions, alternatives, questionIndex, nextBtnIsOn } = this.state;
     const { name, score, email } = this.props;
     return (
       <>
@@ -125,7 +157,7 @@ class Game extends React.Component {
                     data-testid={ item === questions[questionIndex].correct_answer
                       ? 'correct-answer' : `wrong-answer-${index}` }
                     className={ item === questions[questionIndex].correct_answer
-                      ? 'correct-phase-1' : 'wrong-phase-1' }
+                      ? correctAnswer : wrongAnswer }
                     onClick={ item === questions[questionIndex].correct_answer
                       ? () => this.onClickCorrectAnswer(questions[questionIndex]
                         .difficulty)
@@ -134,6 +166,15 @@ class Game extends React.Component {
                     {item}
                   </button>
                 ))}
+                { nextBtnIsOn && (
+                  <button
+                    type="button"
+                    data-testid="btn-next"
+                    onClick={ () => this.onClickNextButton() }
+                  >
+                    Next
+                  </button>
+                )}
               </div>
             </div>
           )}
@@ -148,6 +189,7 @@ Game.propTypes = {
   email: propTypes.string.isRequired,
   score: propTypes.number.isRequired,
   updatePlayerScore: propTypes.func.isRequired,
+  history: propTypes.shape(propTypes.any).isRequired,
 };
 
 const mapStateToProps = (state) => ({
