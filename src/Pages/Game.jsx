@@ -35,14 +35,15 @@ class Game extends React.Component {
   }
 
   renderQuestion = () => {
+    const number = 0.5;
     const { questions, questionIndex } = this.state;
     const alternatives = questions[questionIndex].incorrect_answers
-      .concat(questions[questionIndex].correct_answer).sort();
+      .concat(questions[questionIndex].correct_answer).sort(() => Math.random() - number);
     return (
       <div className="question">
         <h3 data-testid="question-category">{questions[questionIndex].category}</h3>
         <p data-testid="question-text">{questions[questionIndex].question}</p>
-        <div className="answers">
+        <div className="answers" data-testid="answer-options">
           {alternatives.map((item, index) => (
             <button
               type="button"

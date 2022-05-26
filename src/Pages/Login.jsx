@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { fetchTokenThunk } from '../redux/actions';
+import { fetchToken } from '../redux/actions';
 
 class Login extends Component {
   constructor() {
@@ -25,6 +25,15 @@ class Login extends Component {
     return (name.length > 0) && (email.length > 0);
   }
 
+  getUserToken = async (state) => {
+    const { getPlayerToken, history } = this.props;
+    const apiData = await fetch('https://opentdb.com/api_token.php?command=request');
+    const result = await apiData.json();
+    localStorage.setItem('token', result.token);
+    getPlayerToken(state);
+    history.push('/game');
+  }
+
   render() {
     const checkStatus = this.buttonStatus();
 
@@ -32,10 +41,6 @@ class Login extends Component {
       name,
       email,
     } = this.state;
-
-    const {
-      getPlayerToken,
-    } = this.props;
     return (
       <form>
         <label htmlFor="nameInput">
@@ -62,16 +67,14 @@ class Login extends Component {
           />
         </label>
 
-        <Link to="/game">
-          <button
-            type="button"
-            disabled={ !checkStatus }
-            data-testid="btn-play"
-            onClick={ () => getPlayerToken(this.state) }
-          >
-            Play
-          </button>
-        </Link>
+        <button
+          type="button"
+          disabled={ !checkStatus }
+          data-testid="btn-play"
+          onClick={ () => this.getUserToken(this.state) }
+        >
+          Play
+        </button>
         <Link to="/settings">
           <button
             type="button"
@@ -87,10 +90,11 @@ class Login extends Component {
 
 Login.propTypes = {
   getPlayerToken: PropTypes.func.isRequired,
+  history: PropTypes.shape(PropTypes.any).isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  getPlayerToken: (state) => dispatch(fetchTokenThunk(state)),
+  getPlayerToken: (state) => dispatch(fetchToken(state)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
