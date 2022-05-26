@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
 import propTypes from 'prop-types';
 import '../Css/Game.css';
+import { updateScore } from '../redux/actions/index';
 
 class Game extends React.Component {
   constructor() {
@@ -51,7 +52,20 @@ class Game extends React.Component {
     });
   }
 
-  onClickCorrectAnswer = () => {
+  onClickCorrectAnswer = (difficulty) => {
+    const { timer } = this.state;
+    const { updatePlayerScore } = this.props;
+    const points = 10;
+    const hard = 3;
+    const medium = 2;
+    const easy = 1;
+    if (difficulty === 'hard') {
+      updatePlayerScore(points + (timer * hard));
+    } else if (difficulty === 'medium') {
+      updatePlayerScore(points + (timer * medium));
+    } else {
+      updatePlayerScore(points + (timer * easy));
+    }
     this.changeButtonColor();
   }
 
@@ -113,7 +127,8 @@ class Game extends React.Component {
                     className={ item === questions[questionIndex].correct_answer
                       ? 'correct-phase-1' : 'wrong-phase-1' }
                     onClick={ item === questions[questionIndex].correct_answer
-                      ? () => this.onClickCorrectAnswer()
+                      ? () => this.onClickCorrectAnswer(questions[questionIndex]
+                        .difficulty)
                       : () => this.onClickIncorrectAnswer() }
                   >
                     {item}
@@ -132,6 +147,7 @@ Game.propTypes = {
   name: propTypes.string.isRequired,
   email: propTypes.string.isRequired,
   score: propTypes.number.isRequired,
+  updatePlayerScore: propTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -140,4 +156,8 @@ const mapStateToProps = (state) => ({
   score: state.player.score,
 });
 
-export default connect(mapStateToProps, null)(Game);
+const mapDispatchToProps = (dispatch) => ({
+  updatePlayerScore: (score) => dispatch(updateScore(score)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Game);
