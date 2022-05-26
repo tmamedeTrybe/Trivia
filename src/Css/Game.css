@@ -1,0 +1,15 @@
+.correct-phase-1 {
+  border: 3px solid darkgray;
+}
+
+.wrong-phase-1 {
+  border: 3px solid darkgray;
+}
+
+.correct-phase-2 {
+  border: 3px solid rgb(6, 240, 15);
+}
+
+.wrong-phase-2 {
+  border: 3px solid red;
+}

@@ -1,8 +1,8 @@
-import { FETCH_TOKEN } from '../actions';
+import { FETCH_TOKEN, UPDATE_SCORE } from '../actions';
 
 const INITIAL_STATE = {
   name: '',
-  assertions: '',
+  assertions: 0,
   score: 0,
   gravatarEmail: '',
 };
@@ -14,6 +14,12 @@ const player = (state = INITIAL_STATE, action) => {
       ...state,
       name: action.payload.name,
       gravatarEmail: action.payload.email,
+    };
+  case UPDATE_SCORE:
+    return {
+      ...state,
+      score: state.score + action.payload,
+      assertions: state.assertions + 1,
     };
   default:
     return state;
