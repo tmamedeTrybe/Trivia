@@ -10,11 +10,14 @@ class Game extends React.Component {
     this.state = {
       questions: [],
       questionIndex: 0,
+      alternatives: [],
+      timer: 30,
     };
   }
 
   async componentDidMount() {
     await this.fetchQuestions();
+    this.startTimer();
   }
 
   fetchQuestions = async () => {
@@ -28,6 +31,7 @@ class Game extends React.Component {
       return '';
     }
     this.setState({ questions: data.results });
+    this.renderQuestion();
   }
 
   getUserPicture = (email) => {
@@ -40,9 +44,10 @@ class Game extends React.Component {
     buttons.forEach((button) => {
       if (button.className === 'correct-phase-1') {
         button.className = 'correct-phase-2';
-      } else {
+      } else if (button.className === 'wrong-phase-1') {
         button.className = 'wrong-phase-2';
       }
+      button.disabled = true;
     });
   }
 
@@ -51,7 +56,23 @@ class Game extends React.Component {
   }
 
   onClickIncorrectAnswer = () => {
+    console.log('incorreta');
     this.changeButtonColor();
+  }
+
+  startTimer = () => {
+    const second = 1000;
+    setInterval(this.updateTimer, second);
+  }
+
+  updateTimer = () => {
+    const { timer } = this.state;
+    this.setState((prevState) => ({ timer: prevState.timer - 1 }), () => {
+      if (timer === 0) {
+        this.onClickIncorrectAnswer();
+        this.setState({ timer: 30 });
+      }
+    });
   }
 
   renderQuestion = () => {
@@ -59,34 +80,11 @@ class Game extends React.Component {
     const { questions, questionIndex } = this.state;
     const alternatives = questions[questionIndex].incorrect_answers
       .concat(questions[questionIndex].correct_answer).sort(() => Math.random() - number);
-    return (
-      <div className="question">
-        <h3 data-testid="question-category">{questions[questionIndex].category}</h3>
-        <p data-testid="question-text">{questions[questionIndex].question}</p>
-        <div className="answers" data-testid="answer-options">
-          {alternatives.map((item, index) => (
-            <button
-              id="answer-button"
-              type="button"
-              key={ index }
-              data-testid={ item === questions[questionIndex].correct_answer
-                ? 'correct-answer' : `wrong-answer-${index}` }
-              className={ item === questions[questionIndex].correct_answer
-                ? 'correct-phase-1' : 'wrong-phase-1' }
-              onClick={ item === questions[questionIndex].correct_answer
-                ? () => this.onClickCorrectAnswer()
-                : () => this.onClickIncorrectAnswer() }
-            >
-              {item}
-            </button>
-          ))}
-        </div>
-      </div>
-    );
+    this.setState({ alternatives });
   }
 
   render() {
-    const { questions } = this.state;
+    const { questions, alternatives, questionIndex } = this.state;
     const { name, score, email } = this.props;
     return (
       <>
@@ -100,7 +98,30 @@ class Game extends React.Component {
           <h2 data-testid="header-score">{ score }</h2>
         </header>
         <main>
-          { questions.length !== 0 && this.renderQuestion()}
+          { questions.length !== 0 && (
+            <div className="question">
+              <h3 data-testid="question-category">{questions[questionIndex].category}</h3>
+              <p data-testid="question-text">{questions[questionIndex].question}</p>
+              <div className="answers" data-testid="answer-options">
+                {alternatives.map((item, index) => (
+                  <button
+                    id="answer-button"
+                    type="button"
+                    key={ index }
+                    data-testid={ item === questions[questionIndex].correct_answer
+                      ? 'correct-answer' : `wrong-answer-${index}` }
+                    className={ item === questions[questionIndex].correct_answer
+                      ? 'correct-phase-1' : 'wrong-phase-1' }
+                    onClick={ item === questions[questionIndex].correct_answer
+                      ? () => this.onClickCorrectAnswer()
+                      : () => this.onClickIncorrectAnswer() }
+                  >
+                    {item}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
         </main>
       </>
     );
