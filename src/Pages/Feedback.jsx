@@ -11,7 +11,8 @@ class Feedback extends React.Component {
   }
 
   render() {
-    const { userName, userScore, userImage } = this.props;
+    const { userName, userScore, userImage, userAssertions } = this.props;
+    const minScore = 3;
     return (
       <div>
         <header>
@@ -23,14 +24,41 @@ class Feedback extends React.Component {
           <p data-testid="header-player-name">{ userName }</p>
           <p data-testid="header-score">{ userScore }</p>
         </header>
-        <Link to="/ranking">
+        <div>
+          {
+            userScore
+            < minScore
+              ? (
+                <p data-testid="feedback-text">
+                  Could be better...
+                </p>)
+              : (
+                <p data-testid="feedback-text">
+                  Well Done!
+                </p>)
+          }
+        </div>
+        <div>
+          Placar final:
+          <p data-testid="feedback-total-score">{Number(userScore)}</p>
+          Número de acertos
+          <p data-testid="feedback-total-question">{ Number(userAssertions) }</p>
+        </div>
+        <Link to="/">
+          <button
+            type="button"
+            data-testid="btn-play-again"
+            id="playAgain"
+          >
+            Play Again
+          </button>
+        </Link>
+          <Link to="/ranking">
           <button
             type="button"
             data-testid="btn-ranking"
           >
             Ranking
-          </button>
-        </Link>
       </div>);
   }
 }
@@ -39,12 +67,14 @@ const mapStateToProps = (state) => ({
   userName: state.player.name,
   userImage: state.player.gravatarEmail,
   userScore: state.player.score,
+  userAssertions: state.player.assertions,
 });
 
 Feedback.propTypes = {
   userName: propTypes.string.isRequired,
   userImage: propTypes.string.isRequired,
   userScore: propTypes.string.isRequired,
+  userAssertions: propTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps)(Feedback);
