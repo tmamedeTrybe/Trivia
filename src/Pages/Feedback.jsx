@@ -26,8 +26,7 @@ class Feedback extends React.Component {
         </header>
         <div>
           {
-            userScore
-            < minScore
+            userAssertions < minScore
               ? (
                 <p data-testid="feedback-text">
                   Could be better...
