@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
 import propTypes from 'prop-types';
+import '../Css/Game.css';
 
 class Game extends React.Component {
   constructor() {
@@ -34,6 +35,25 @@ class Game extends React.Component {
     return `https://www.gravatar.com/avatar/${hash}`;
   }
 
+  changeButtonColor = () => {
+    const buttons = document.querySelectorAll('#answer-button');
+    buttons.forEach((button) => {
+      if (button.className === 'correct-phase-1') {
+        button.className = 'correct-phase-2';
+      } else {
+        button.className = 'wrong-phase-2';
+      }
+    });
+  }
+
+  onClickCorrectAnswer = () => {
+    this.changeButtonColor();
+  }
+
+  onClickIncorrectAnswer = () => {
+    this.changeButtonColor();
+  }
+
   renderQuestion = () => {
     const number = 0.5;
     const { questions, questionIndex } = this.state;
@@ -46,10 +66,16 @@ class Game extends React.Component {
         <div className="answers" data-testid="answer-options">
           {alternatives.map((item, index) => (
             <button
+              id="answer-button"
               type="button"
               key={ index }
               data-testid={ item === questions[questionIndex].correct_answer
                 ? 'correct-answer' : `wrong-answer-${index}` }
+              className={ item === questions[questionIndex].correct_answer
+                ? 'correct-phase-1' : 'wrong-phase-1' }
+              onClick={ item === questions[questionIndex].correct_answer
+                ? () => this.onClickCorrectAnswer()
+                : () => this.onClickIncorrectAnswer() }
             >
               {item}
             </button>
