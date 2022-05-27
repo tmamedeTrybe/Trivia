@@ -5,7 +5,7 @@ import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux';
 import App from '../App.js'
 // import { fetchSimulator, userData, ENDPOINTS, TIME_IN_MILLISECONDS} from '../mocks/fetchSimulator';
 import localStorageSimulator from '../mocks/localStorageSimulator';
-// require('../mocks/fetchSimulator');
+require('../mocks/fetchSimulator');
 
 // const userTokenUrl = 'https://opentdb.com/api_token.php?command=request';
 
