@@ -23,6 +23,7 @@ class Game extends React.Component {
   async componentDidMount() {
     await this.fetchQuestions();
     this.startTimer();
+    // localStorage.setItem('ranking', []);
   }
 
   fetchQuestions = async () => {
