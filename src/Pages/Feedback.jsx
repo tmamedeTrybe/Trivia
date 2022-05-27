@@ -3,8 +3,38 @@ import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import md5 from 'crypto-js/md5';
 import { Link } from 'react-router-dom';
+import { resetScore } from '../redux/actions';
+import { addToRanking, getRanking } from '../LocalStorage/rankingStorage';
 
 class Feedback extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      name: '',
+      assertions: 0,
+      score: 0,
+      gravatarEmail: '',
+    };
+  }
+
+  componentDidMount() {
+    getRanking();
+    this.saveRank();
+  }
+
+  // COMPONENT WILL AMOUNT > DISPATCH PRA ZERAR GAME
+  componentWillUnmount() {
+    const { resetPlayerScore } = this.props;
+    resetPlayerScore(this.state);
+  }
+
+  saveRank = () => {
+    const { userName, userScore, userImage } = this.props;
+    const gravatar = `https://www.gravatar.com/avatar/${this.createGravatarImage(userImage)}`;
+    const player = { gravatar, userName, userScore };
+    addToRanking(player);
+  }
+
   createGravatarImage = (email) => {
     const image = md5(email).toString();
     return image;
@@ -67,16 +97,21 @@ class Feedback extends React.Component {
 
 const mapStateToProps = (state) => ({
   userName: state.player.name,
+  userAssertions: state.player.assertions,
   userImage: state.player.gravatarEmail,
   userScore: state.player.score,
-  userAssertions: state.player.assertions,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  resetPlayerScore: (state) => dispatch(resetScore(state)),
 });
 
 Feedback.propTypes = {
   userName: propTypes.string.isRequired,
+  userAssertions: propTypes.number.isRequired,
   userImage: propTypes.string.isRequired,
-  userScore: propTypes.string.isRequired,
-  userAssertions: propTypes.string.isRequired,
+  userScore: propTypes.number.isRequired,
+  resetPlayerScore: propTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(Feedback);
+export default connect(mapStateToProps, mapDispatchToProps)(Feedback);
