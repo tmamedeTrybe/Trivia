@@ -6,4 +6,4 @@ export default function localStorageSimulator(key) {
   });
 }
 
-afterEach(jest.clearAllMocks);
+// afterEach(jest.clearAllMocks);
