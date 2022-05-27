@@ -3,28 +3,24 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux';
 import App from '../App.js'
-// import { expect } from '@jest/globals';
-import { fetchSimulator, userData, ENDPOINTS, TIME_IN_MILLISECONDS} from '../mocks/fetchSimulator';
-require('../mocks/fetchSimulator');
+// import { fetchSimulator, userData, ENDPOINTS, TIME_IN_MILLISECONDS} from '../mocks/fetchSimulator';
+import localStorageSimulator from '../mocks/localStorageSimulator';
+// require('../mocks/fetchSimulator');
 
-const userTokenUrl = 'https://opentdb.com/api_token.php?command=request';
+// const userTokenUrl = 'https://opentdb.com/api_token.php?command=request';
 
-const fetchUserToken = async (url) => {  
-  if (url === undefined) {
-    throw new Error('You must provide an url');
-  }   
-  const response = await fetch(url);
-  const data = await response.json();
-  return data;  
-};
+// const fetchUserToken = async (url) => {  
+//   if (url === undefined) {
+//     throw new Error('You must provide an url');
+//   }   
+//   const response = await fetch(url);
+//   const data = await response.json();
+//   return data;  
+// };
 
 const userToken = "44fe45813c8ea2f92f519bac70ae113f4db26c09788deca0879678cf90a1335f";
-// const INITIAL_STATE = {
-//   player: '',
-//   assertions: '',
-//   score: '',
-//   gravatarEmail: '',
-// };
+
+const tokenToStorage = (token) => localStorage.setItem('token', token);
 
 describe('Testa a tela de login', () => {
   it('Tem 2 inputs e 2 botões na tela', () => {
@@ -35,13 +31,13 @@ describe('Testa a tela de login', () => {
 
     const buttons = screen.getAllByRole('button');
     expect(buttons).toHaveLength(2);  
-  })
+  });
   it('Botão "Play" está desabilitado ao iniciar a página', () => {
     renderWithRouterAndRedux(<App/>)
 
     const playButton = screen.getByRole('button', {name: /play/i});
     expect(playButton).toHaveAttribute('disabled');
-  })
+  });
   it('Jogador pode escrever nome e email e clicar em "Play"', () => {
     global.localStorage = jest.fn()
     renderWithRouterAndRedux(<App/>)
@@ -62,7 +58,7 @@ describe('Testa a tela de login', () => {
     expect(playButton).toBeInTheDocument();
     
     userEvent.click(playButton);
-  })
+  });
     it('Ao clicar em Play a função fetch é chamada', () => {
     renderWithRouterAndRedux(<App/>);
 
@@ -86,9 +82,11 @@ describe('Testa a tela de login', () => {
 
     expect(fetch).toHaveBeenCalled();
 
-    })
-    it.only('Testa endpoint se endpoint da API é o correto', () => {
+    });
+    it('Testa se token é enviado ao localStorage', () => {
       renderWithRouterAndRedux(<App/>);
+
+      localStorageSimulator('setItem');
   
       const nameInput = screen.getByRole('textbox', {name: /nome/i});
       expect(nameInput).toBeInTheDocument();
@@ -107,13 +105,10 @@ describe('Testa a tela de login', () => {
       expect(playButton).toBeInTheDocument();
   
       userEvent.click(playButton);
-  
-      expect(fetchUserToken(userTokenUrl)).toHaveReturned(userData)
-  
-      // // expect(localStorage).toHaveBeenCalled();
-      // history.push( '/game');
-  
-      // renderWithRouterAndRedux(<App/>, null, '/game');
+
+      tokenToStorage(userToken);
+      
+      expect(localStorage.setItem).toHaveBeenCalledWith('token', userToken);      
   
       //https://stackoverflow.com/questions/21418580/what-is-the-difference-between-before-and-beforeeach
       // expect(window.location.pathname).toBe('/game');
