@@ -4,7 +4,8 @@ import React from 'react';
 import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux';
 import App from '../App.js'
 // import { expect } from '@jest/globals';
-require('../mocks/fetchSimulator')
+import { fetchSimulator, userData, ENDPOINTS, TIME_IN_MILLISECONDS} from '../mocks/fetchSimulator';
+require('../mocks/fetchSimulator');
 
 const userTokenUrl = 'https://opentdb.com/api_token.php?command=request';
 
@@ -86,37 +87,37 @@ describe('Testa a tela de login', () => {
     expect(fetch).toHaveBeenCalled();
 
     })
-    // it('Testa endpoint se endpoint da API é o correto', () => {
-    //   renderWithRouterAndRedux(<App/>);
+    it.only('Testa endpoint se endpoint da API é o correto', () => {
+      renderWithRouterAndRedux(<App/>);
   
-    //   const nameInput = screen.getByRole('textbox', {name: /nome/i});
-    //   expect(nameInput).toBeInTheDocument();
+      const nameInput = screen.getByRole('textbox', {name: /nome/i});
+      expect(nameInput).toBeInTheDocument();
   
-    //   const emailInput = screen.getByRole('textbox', {name: /email/i});
-    //   expect(emailInput).toBeInTheDocument();
+      const emailInput = screen.getByRole('textbox', {name: /email/i});
+      expect(emailInput).toBeInTheDocument();
   
-    //   userEvent.type(nameInput, 'daniel');
-    //   expect(nameInput).toHaveValue('daniel');
+      userEvent.type(nameInput, 'daniel');
+      expect(nameInput).toHaveValue('daniel');
   
   
-    //   userEvent.type(emailInput, 'daniel@trybe.com');
-    //   expect(emailInput).toHaveValue('daniel@trybe.com');
+      userEvent.type(emailInput, 'daniel@trybe.com');
+      expect(emailInput).toHaveValue('daniel@trybe.com');
   
-    //   const playButton = screen.getByRole('button', {name: /play/i});
-    //   expect(playButton).toBeInTheDocument();
+      const playButton = screen.getByRole('button', {name: /play/i});
+      expect(playButton).toBeInTheDocument();
   
-    //   userEvent.click(playButton);
+      userEvent.click(playButton);
   
-    //   expect(fetch(userTokenUrl)).toHaveBeenCalledWith(userTokenUrl)
+      expect(fetchUserToken(userTokenUrl)).toHaveReturned(userData)
   
-    //   // // expect(localStorage).toHaveBeenCalled();
-    //   // history.push( '/game');
+      // // expect(localStorage).toHaveBeenCalled();
+      // history.push( '/game');
   
-    //   // renderWithRouterAndRedux(<App/>, null, '/game');
+      // renderWithRouterAndRedux(<App/>, null, '/game');
   
-    //   //https://stackoverflow.com/questions/21418580/what-is-the-difference-between-before-and-beforeeach
-    //   // expect(window.location.pathname).toBe('/game');
-    //   }) 
+      //https://stackoverflow.com/questions/21418580/what-is-the-difference-between-before-and-beforeeach
+      // expect(window.location.pathname).toBe('/game');
+      }) 
   
 
 }) 
