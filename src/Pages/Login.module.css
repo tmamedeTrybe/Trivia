@@ -1,0 +1,92 @@
+@import url( 'https://fonts.googleapis.com/css2?family=Tajawal:wght@200&display=swap') ;
+
+.container {
+  align-items: center;
+  background-image: linear-gradient(rgb(148, 201, 169), rgb(198, 236, 174));
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+  width: 100vw;
+
+}
+
+.logo {
+  color: white;
+  font-family: Impact , sans-serif;
+  font-size: 80px;
+}
+
+
+.logo h1 {
+  animation: pulse 3s infinite linear;
+  animation-direction: alternate;
+}
+
+
+@keyframes pulse {
+
+  0% {
+    transform: scale(1.1);
+  }
+}
+
+.form {
+  align-items: center;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  font-family: Tajawal , sans-serif;
+  font-size: 25px;
+  height: 100vh;
+  width: 100vw;
+}
+
+.form input {
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  margin: 20px;
+  outline: none;
+  padding: 10px 20px;
+
+}
+
+.buttons {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 30px;
+
+}
+
+.buttonPlay {
+  border: none;
+  border-radius: 3px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  font-family: Tajawal , sans-serif;
+  font-size: 20px;
+  margin: 50px;
+  padding: 10px 90px;
+  transition: all 0.8s linear;
+}
+
+.buttonSettings {
+  border: none;
+  border-radius: 3px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  font-family: Tajawal , sans-serif;
+  font-size: 20px;
+  margin: 50px;
+  padding: 10px 30px;
+  transition: all 0.8s linear;
+
+}
+
+.buttons button:hover {
+  background-color: rgb(35, 87, 106);
+  border: none;
+  color: white;
+}
+

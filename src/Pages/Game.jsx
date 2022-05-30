@@ -4,9 +4,7 @@ import md5 from 'crypto-js/md5';
 import propTypes from 'prop-types';
 import '../Css/Game.css';
 import { updateScore } from '../redux/actions/index';
-
-const correctAnswer = 'correct-phase-1';
-const wrongAnswer = 'wrong-phase-1';
+import styles from './Game.module.css';
 
 class Game extends React.Component {
   constructor() {
@@ -48,10 +46,10 @@ class Game extends React.Component {
   changeButtonColor = () => {
     const buttons = document.querySelectorAll('#answer-button');
     buttons.forEach((button) => {
-      if (button.className === correctAnswer) {
-        button.className = 'correct-phase-2';
-      } else if (button.className === wrongAnswer) {
-        button.className = 'wrong-phase-2';
+      if (button.className === styles.correctAnswer) {
+        button.className = styles.correctPhase2;
+      } else if (button.className === styles.wrongAnswer) {
+        button.className = styles.wrongPhase2;
       }
       button.disabled = true;
     });
@@ -61,10 +59,10 @@ class Game extends React.Component {
   rechangeButtonColor = () => {
     const buttons = document.querySelectorAll('#answer-button');
     buttons.forEach((button) => {
-      if (button.className === 'correct-phase-2') {
-        button.className = correctAnswer;
-      } else if (button.className === 'wrong-phase-2') {
-        button.className = wrongAnswer;
+      if (button.className === styles.correctPhase2) {
+        button.className = styles.correctAnswer;
+      } else if (button.className === styles.wrongPhase2) {
+        button.className = styles.wrongAnswer;
       }
       button.disabled = false;
     });
@@ -135,45 +133,60 @@ class Game extends React.Component {
     const { name, score, email } = this.props;
     return (
       <>
-        <header>
-          <img
-            src={ this.getUserPicture(email) }
-            data-testid="header-profile-picture"
-            alt={ `gravatar img of ${name}` }
-          />
-          <h2 data-testid="header-player-name">{ name }</h2>
-          <h2 data-testid="header-score">{ score }</h2>
+        <header className={ styles.header }>
+          <div className={ styles.logo }>
+            <h1>Trivia</h1>
+          </div>
+          <div className={ styles.userInfos }>
+            <img
+              src={ this.getUserPicture(email) }
+              data-testid="header-profile-picture"
+              alt={ `gravatar img of ${name}` }
+            />
+            <h2 data-testid="header-player-name">{ name }</h2>
+            <h2 data-testid="header-score">{ score }</h2>
+          </div>
         </header>
-        <main>
+        <main className={ styles.container }>
           { questions.length !== 0 && (
-            <div className="question">
-              <h3 data-testid="question-category">{questions[questionIndex].category}</h3>
+            <div className={ styles.questions }>
+              <div className={ styles.questionCategory }>
+                <hr />
+                <h3 data-testid="question-category">
+                  {questions[questionIndex]
+                    .category}
+                </h3>
+                <hr />
+              </div>
               <p data-testid="question-text">{questions[questionIndex].question}</p>
-              <div className="answers" data-testid="answer-options">
-                {alternatives.map((item, index) => (
-                  <button
-                    id="answer-button"
-                    type="button"
-                    key={ index }
-                    data-testid={ item === questions[questionIndex].correct_answer
-                      ? 'correct-answer' : `wrong-answer-${index}` }
-                    className={ item === questions[questionIndex].correct_answer
-                      ? correctAnswer : wrongAnswer }
-                    onClick={ item === questions[questionIndex].correct_answer
-                      ? () => this.onClickCorrectAnswer(questions[questionIndex]
-                        .difficulty)
-                      : () => this.onClickIncorrectAnswer() }
-                  >
-                    {item}
-                  </button>
-                ))}
+              <div className={ styles.answers } data-testid="answer-options">
+                <div className={ styles.answersButtons }>
+                  {alternatives.map((item, index) => (
+                    <button
+                      id="answer-button"
+                      type="button"
+                      key={ index }
+                      data-testid={ item === questions[questionIndex].correct_answer
+                        ? 'correct-answer' : `wrong-answer-${index}` }
+                      className={ item === questions[questionIndex].correct_answer
+                        ? styles.correctAnswer : styles.wrongAnswer }
+                      onClick={ item === questions[questionIndex].correct_answer
+                        ? () => this.onClickCorrectAnswer(questions[questionIndex]
+                          .difficulty)
+                        : () => this.onClickIncorrectAnswer() }
+                    >
+                      {item}
+                    </button>
+                  ))}
+                </div>
                 { nextBtnIsOn && (
                   <button
                     type="button"
                     data-testid="btn-next"
                     onClick={ () => this.onClickNextButton() }
+                    className={ styles.nextButton }
                   >
-                    Next
+                    &gt;
                   </button>
                 )}
               </div>
