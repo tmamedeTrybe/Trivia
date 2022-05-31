@@ -15,6 +15,7 @@
   color: white;
   font-family: Impact , sans-serif;
   font-size: 80px;
+  text-shadow: 0.8px 0.8px black;
 }
 
 
@@ -33,7 +34,7 @@
 
 .form {
   align-items: center;
-  color: white;
+  color: rgb(35, 87, 106);
   display: flex;
   flex-direction: column;
   font-family: Tajawal , sans-serif;

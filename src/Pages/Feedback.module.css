@@ -1,0 +1,124 @@
+@import url( 'https://fonts.googleapis.com/css2?family=Tajawal:wght@200&display=swap') ;
+
+:root {
+
+  --blue: rgb(35, 87, 106);
+
+  --yellow: rgb(198, 236, 174);
+
+  --green: rgb(148, 201, 169);
+
+  --greendark: rgb(34, 99, 97);
+
+  --orange: rgb(211, 172, 99);
+
+}
+
+.container {
+  align-items: center;
+  background-image: linear-gradient(var(--greendark), var(--green), var(--yellow));
+  display: flex;
+  flex-direction: column;
+  font-family: Tajawal , sans-serif;
+  height: 100vh;
+  justify-content: center;
+  width: 100vw;
+}
+
+
+.header {
+  align-items: center;
+  background-color: transparent;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  font-family: Tajawal , sans-serif;
+  justify-content: space-around;
+  position: fixed;
+  width: 100%;
+}
+
+.userInfos {
+  display: flex;
+  flex-direction: row;
+  height: 50%;
+  justify-content: space-around;
+  width: 30%;
+}
+
+.userInfos img {
+  border-radius: 50px;
+}
+
+.logo {
+  color: white;
+  font-family: Impact , sans-serif;
+  font-size: 40px;
+  text-shadow: 0.8px 0.8px black;
+}
+
+.logo h1 {
+  animation: pulse 2s infinite linear;
+  animation-direction: alternate;
+}
+
+
+@keyframes pulse {
+
+  0% {
+    transform: scale(1.1);
+  }
+}
+
+.feedbackMessage {
+  animation: fade 1s linear;
+  border: solid 0.1px rgba(255, 255, 255, 0.244);
+  border-radius: 60px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.15);
+  color: #226361;
+  font-size: 80px;
+  margin-bottom: 30px;
+  margin-top: 100px;
+  opacity: 1;
+  padding: 30px;
+  text-align: center;
+  text-shadow: 0.8px 0.8px black;
+  width: 60%;
+}
+
+@keyframes fade {
+
+  0% {
+    opacity: 0;
+  }
+}
+
+.finalScores {
+  color: #226361;
+  display: flex;
+  flex-direction: row;
+  font-family: Tajawal , sans-serif;
+  font-size: 30px;
+  justify-content: space-around;
+  margin-bottom: 50px;
+  text-shadow: 0.8px 0.8px black;
+  width: 50%;
+}
+
+.buttons button {
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  color: #226361;
+  font-family: Tajawal , sans-serif;
+  font-size: 20px;
+  margin: 50px;
+  padding: 10px 90px;
+  transition: all 0.8s linear;
+}
+
+.buttons button:hover {
+  background-color: rgb(35, 87, 106);
+  border: none;
+  color: white;
+}

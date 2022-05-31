@@ -5,6 +5,7 @@ import md5 from 'crypto-js/md5';
 import { Link } from 'react-router-dom';
 import { resetScore } from '../redux/actions';
 import { addToRanking, getRanking } from '../LocalStorage/rankingStorage';
+import styles from './Feedback.module.css';
 
 class Feedback extends React.Component {
   constructor() {
@@ -45,52 +46,69 @@ class Feedback extends React.Component {
     const minScore = 3;
     return (
       <div>
-        <header>
-          <img
-            src={ `https://www.gravatar.com/avatar/${this.createGravatarImage(userImage)}` }
-            alt="Foto de jogador"
-            data-testid="header-profile-picture"
-          />
-          <p data-testid="header-player-name">{ userName }</p>
-          <p data-testid="header-score">{ userScore }</p>
+        <header className={ styles.header }>
+          <div className={ styles.logo }>
+            <h1> Trivia </h1>
+          </div>
+          <div className={ styles.userInfos }>
+            <img
+              src={ `https://www.gravatar.com/avatar/${this.createGravatarImage(userImage)}` }
+              alt="Foto de jogador"
+              data-testid="header-profile-picture"
+            />
+            <h2 data-testid="header-player-name">{ userName }</h2>
+            <h2 data-testid="header-score">{ userScore }</h2>
+          </div>
         </header>
-        <div>
-          {
-            userAssertions < minScore
-              ? (
-                <p data-testid="feedback-text">
-                  Could be better...
-                </p>)
-              : (
-                <p data-testid="feedback-text">
-                  Well Done!
-                </p>)
-          }
-        </div>
-        <div>
-          Placar final:
-          <p data-testid="feedback-total-score">{Number(userScore)}</p>
-          Número de acertos
-          <p data-testid="feedback-total-question">{ Number(userAssertions) }</p>
-        </div>
-        <Link to="/">
-          <button
-            type="button"
-            data-testid="btn-play-again"
-            id="playAgain"
-          >
-            Play Again
-          </button>
-        </Link>
+        <main className={ styles.container }>
+          <section className={ styles.feedbackMessage }>
+            {
+              userAssertions < minScore
+                ? (
+                  <p data-testid="feedback-text">
+                    Could be better...
+                  </p>)
+                : (
+                  <p data-testid="feedback-text">
+                    Well Done!
+                  </p>)
+            }
+          </section>
+          <section className={ styles.finalScores }>
+            <p
+              data-testid="feedback-total-score"
+            >
+              {`Placar final: ${Number(userScore)}`}
 
-        <Link to="/ranking">
-          <button
-            type="button"
-            data-testid="btn-ranking"
-          >
-            Ranking
-          </button>
-        </Link>
+            </p>
+            <p
+              data-testid="feedback-total-question"
+            >
+              {`Número de acertos: ${Number(userAssertions)}`}
+
+            </p>
+          </section>
+          <section className={ styles.buttons }>
+            <Link to="/">
+              <button
+                type="button"
+                data-testid="btn-play-again"
+                id="playAgain"
+              >
+                Play Again
+              </button>
+            </Link>
+
+            <Link to="/ranking">
+              <button
+                type="button"
+                data-testid="btn-ranking"
+              >
+                Ranking
+              </button>
+            </Link>
+          </section>
+        </main>
       </div>);
   }
 }

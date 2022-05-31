@@ -82,6 +82,7 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
 import { getRanking } from '../LocalStorage/rankingStorage';
+import styles from './Ranking.module.css';
 
 class Ranking extends React.Component {
   constructor() {
@@ -105,41 +106,47 @@ class Ranking extends React.Component {
     const { ranking } = this.state;
     console.log('from state', ranking);
     return (
-      <div>
-        <h2 data-testid="ranking-title">Ranking</h2>
-
-        <Link to="/">
-          <button
-            type="button"
-            data-testid="btn-go-home"
-          >
-            Login
-          </button>
-        </Link>
-        <ol>
-          {
-            ranking.map((player, index) => (
-              <li
-                key={ index }
-              >
-                <img
-                  src={ player.gravatar }
-                  alt="Avatar do jogador"
-                />
-                <p
-                  data-testid={ `player-name-${index}` }
+      <div className={ styles.container }>
+        <header className={ styles.header }>
+          <h1>Trivia</h1>
+        </header>
+        <main className={ styles.main }>
+          <hr />
+          <h2 data-testid="ranking-title">Ranking</h2>
+          <hr />
+          <Link to="/">
+            <button
+              type="button"
+              data-testid="btn-go-home"
+            >
+              Login
+            </button>
+          </Link>
+          <ol className={ styles.list }>
+            {
+              ranking.map((player, index) => (
+                <li
+                  key={ index }
                 >
-                  { player.userName }
-                </p>
-                <p
-                  data-testid={ `player-score-${index}` }
-                >
-                  { player.userScore }
-                </p>
-              </li>
-            ))
-          }
-        </ol>
+                  <img
+                    src={ player.gravatar }
+                    alt="Avatar do jogador"
+                  />
+                  <p
+                    data-testid={ `player-name-${index}` }
+                  >
+                    { player.userName }
+                  </p>
+                  <p
+                    data-testid={ `player-score-${index}` }
+                  >
+                    { player.userScore }
+                  </p>
+                </li>
+              ))
+            }
+          </ol>
+        </main>
       </div>
     );
   }

@@ -50,6 +50,7 @@
   color: white;
   font-family: Impact , sans-serif;
   font-size: 40px;
+  text-shadow: 0.8px 0.8px black;
 }
 
 .logo h1 {
@@ -69,7 +70,7 @@
   border: solid 0.1px rgba(255, 255, 255, 0.244);
   border-radius: 20px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.15);
-  color: white;
+  color: #226361;
   display: flex;
   flex-direction: column;
   font-family: Tajawal , sans-serif;
@@ -77,6 +78,7 @@
   margin-top: 150px;
   padding: 50px;
   text-align: center;
+  text-shadow: 0.8px 0.8px black;
   width: 80%;
 }
 
@@ -86,6 +88,7 @@
 
 .questions p {
   font-size: 30px;
+  font-weight: 100;
 }
 
 .questionCategory {
@@ -96,7 +99,7 @@
 }
 
 .questionCategory hr {
-  border: solid 0.1px white;
+  border: solid 0.1px #226361;
   width: 20%;
 }
 
@@ -135,7 +138,7 @@
   border: solid 0.1px rgba(255, 255, 255, 0.244);
   border-radius: 20px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.15);
-  color: white;
+  color: #226361;
   font-size: 20px;
   margin: 10px;
   padding: 12px;
@@ -148,7 +151,7 @@
   border: solid 0.1px rgba(255, 255, 255, 0.244);
   border-radius: 20px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.15);
-  color: white;
+  color: #226361;
   font-size: 20px;
   margin: 10px;
   padding: 12px;
@@ -168,7 +171,7 @@
 .nextButton {
   background-color: transparent;
   border: none;
-  color: white;
+  color: #226361;
   font-family: Tajawal , sans-serif;
   font-size: 100px;
   transition: all 1s linear;
@@ -179,7 +182,7 @@
   border: solid 0.1px rgba(255, 255, 255, 0.244);
   border-radius: 20px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.15);
-  color: white;
+  color: #226361;
   font-size: 20px;
   margin: 10px;
   padding: 12px;
@@ -190,7 +193,7 @@
   border: solid 0.1px rgba(255, 255, 255, 0.244);
   border-radius: 20px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.15);
-  color: white;
+  color: #226361;
   font-size: 20px;
   margin: 10px;
   opacity: 80%;
